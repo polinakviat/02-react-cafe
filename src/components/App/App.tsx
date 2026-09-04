@@ -1,6 +1,6 @@
-import React, { useState, StrictMode } from "react";
+import { useState } from "react";
 import { createRoot } from "react-dom/client";
-import css from "index.css"; // Ensure this matches your CSS module filename
+import css from "./App.module.css";
 
 type VoteType = "good" | "neutral" | "bad";
 
@@ -70,27 +70,6 @@ export default function App() {
 const rootElement = document.getElementById("root");
 if (rootElement) {
   createRoot(rootElement as HTMLElement).render(
-    <StrictMode>
-      <App />
-    </StrictMode>
+    <App />
   );
 }
-
-import styles from './VoteStats.module.css';
-
-export default function VoteStats({ good = 0, neutral = 0, bad = 0 }) {
-  const total = good + neutral + bad;
-  const positivePercentage = total > 0 ? Math.round((good / total) * 100) : 0;
-
-  return (
-    <div className={styles.container}>
-      <p className={styles.stat}>Good: <strong>{good}</strong></p>
-      <p className={styles.stat}>Neutral: <strong>{neutral}</strong></p>
-      <p className={styles.stat}>Bad: <strong>{bad}</strong></p>
-      <p className={styles.stat}>Total: <strong>{total}</strong></p>
-      <p className={styles.stat}>Positive: <strong>{positivePercentage}%</strong></p>
-    </div>
-  );
-}
-
-<p className={css.message}>No feedback yet</p>
