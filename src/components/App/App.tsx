@@ -1,12 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React, { useState } from 'react';
+import { createRoot } from 'react-dom/client';
 import css from "./App.module.css";
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
 
 export type VoteType = 'good' | 'neutral' | 'bad';
 
