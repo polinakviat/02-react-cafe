@@ -2,26 +2,63 @@ import { useState } from 'react';
 import css from './App.module.css';
 import VoteStats from '../VoteStats/VoteStats';
 
-export type VoteType = 'good' | 'neutral' | 'bad';
-
-export interface Votes {
+type Votes = {
   good: number;
   neutral: number;
   bad: number;
+};
+
+type VoteType = keyof Votes;
+
+function NotificationMessage() {
+  return <p>No votes yet. Please cast your first vote.</p>;
 }
 
-interface FeedbackState {
-  good: number;
-  neutral: number;
-  bad: number;
+function CafeInfo() {
+  return (
+    <div>
+      <h1>Cafe Feedback</h1>
+      <p>Please leave your feedback about our service.</p>
+    </div>
+  );
+}
+
+function VoteOptions({
+  onVote,
+  onReset,
+  canReset,
+}: {
+  onVote: (type: VoteType) => void;
+  onReset: () => void;
+  canReset: boolean;
+}) {
+  return (
+    <div>
+      <button type="button" onClick={() => onVote('good')}>
+        Good
+      </button>
+      <button type="button" onClick={() => onVote('neutral')}>
+        Neutral
+      </button>
+      <button type="button" onClick={() => onVote('bad')}>
+        Bad
+      </button>
+      <button type="button" onClick={onReset} disabled={!canReset}>
+        Reset
+      </button>
+    </div>
+  );
 }
 
 export default function App() {
-  const [votes, setVotes] = useState<FeedbackState>({
+  const [votes, setVotes] = useState<Votes>({
     good: 0,
     neutral: 0,
     bad: 0,
   });
+
+  const totalVotes = votes.good + votes.neutral + votes.bad;
+  const positiveRate = totalVotes > 0 ? Math.round((votes.good / totalVotes) * 100) : 0;
 
   const handleVote = (type: VoteType) => {
     setVotes((prevVotes) => ({
@@ -38,43 +75,25 @@ export default function App() {
     });
   };
 
-  const totalVotes = votes.good + votes.neutral + votes.bad;
-  const positiveRate = totalVotes > 0 ? Math.round((votes.good / totalVotes) * 100) : 0;
-
   return (
-    <div className={css.app}>
-      <div className={css.container}>
-        <h1 className={css.title}>Sip Happens Café</h1>
-        <p className={css.description}>
-          Please rate our service by selecting one of the options below.
-        </p>
+    <div className={css.container}>
+      <CafeInfo />
 
-        <div className={css.buttonGroup}>
-          <button className={css.button} onClick={() => handleVote('good')}>
-            Good ({votes.good})
-          </button>
-          <button className={css.button} onClick={() => handleVote('neutral')}>
-            Neutral ({votes.neutral})
-          </button>
-          <button className={css.button} onClick={() => handleVote('bad')}>
-            Bad ({votes.bad})
-          </button>
+      <VoteOptions
+        onVote={handleVote}
+        onReset={handleReset}
+        canReset={totalVotes > 0}
+      />
 
-          {totalVotes > 0 && (
-            <button className={`${css.button} ${css.reset}`} onClick={handleReset}>
-              Reset
-            </button>
-          )}
-
-          {totalVotes > 0 && (
-            <VoteStats
-              votes={votes}
-              totalVotes={totalVotes}
-              positiveRate={positiveRate}
-            />
-          )}
-        </div>
-      </div>
+      {totalVotes > 0 ? (
+        <VoteStats
+          votes={votes}
+          totalVotes={totalVotes}
+          positiveRate={positiveRate}
+        />
+      ) : (
+        <NotificationMessage />
+      )}
     </div>
   );
 }
