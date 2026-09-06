@@ -1,16 +1,9 @@
 import { useState } from 'react';
 import css from './App.module.css';
 import VoteStats from '../VoteStats/VoteStats';
+import type { Votes, VoteType } from '../../types/votes';
 
-type Votes = {
-  good: number;
-  neutral: number;
-  bad: number;
-};
-
-type VoteType = keyof Votes;
-
-function NotificationMessage() {
+function Notification() {
   return <p>No votes yet. Please cast your first vote.</p>;
 }
 
@@ -92,7 +85,7 @@ export default function App() {
           positiveRate={positiveRate}
         />
       ) : (
-        <NotificationMessage />
+        <Notification />
       )}
     </div>
   );
