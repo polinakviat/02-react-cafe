@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { createRoot } from 'react-dom/client';
-import css from "./App.module.css";
+import css from './App.module.css';
 
 export type VoteType = 'good' | 'neutral' | 'bad';
 
@@ -49,13 +48,13 @@ export default function App() {
         </p>
 
         <div className={css.buttonGroup}>
-          <button className={css.button} onClick={() => handleVote("good")}>
+          <button className={css.button} onClick={() => handleVote('good')}>
             Good ({votes.good})
           </button>
-          <button className={css.button} onClick={() => handleVote("neutral")}>
+          <button className={css.button} onClick={() => handleVote('neutral')}>
             Neutral ({votes.neutral})
           </button>
-          <button className={css.button} onClick={() => handleVote("bad")}>
+          <button className={css.button} onClick={() => handleVote('bad')}>
             Bad ({votes.bad})
           </button>
 
@@ -70,12 +69,5 @@ export default function App() {
         </div>
       </div>
     </div>
-  );
-}
-
-const rootElement = document.getElementById("root");
-if (rootElement) {
-  createRoot(rootElement as HTMLElement).render(
-    <App />
   );
 }
