@@ -1,14 +1,17 @@
 import type { Votes } from '../../types/votes';
 import css from './VoteStats.module.css';
 
-interface VoteStatsProps {
+export interface VoteStatsProps {
   votes: Votes;
+  totalVotes: number;
+  positiveRate: number;
 }
 
-export default function VoteStats({ votes: { good, neutral, bad } }: VoteStatsProps) {
-  const total = good + neutral + bad;
-  const positive = total > 0 ? Math.round((good / total) * 100) : 0;
-
+export default function VoteStats({
+  votes: { good, neutral, bad },
+  totalVotes,
+  positiveRate,
+}: VoteStatsProps) {
   return (
     <div className={css.container}>
       <p className={css.stat}>
@@ -21,10 +24,10 @@ export default function VoteStats({ votes: { good, neutral, bad } }: VoteStatsPr
         Bad: <strong>{bad}</strong>
       </p>
       <p className={css.stat}>
-        Total: <strong>{total}</strong>
+        Total: <strong>{totalVotes}</strong>
       </p>
       <p className={css.stat}>
-        Positive: <strong>{positive}%</strong>
+        Positive: <strong>{positiveRate}%</strong>
       </p>
     </div>
   );
