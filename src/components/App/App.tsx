@@ -1,8 +1,20 @@
-import { useState } from "react";
-import { createRoot } from "react-dom/client";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 import css from "./App.module.css";
 
-type VoteType = "good" | "neutral" | "bad";
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+export type VoteType = 'good' | 'neutral' | 'bad';
+
+export interface Votes {
+  good: number;
+  neutral: number;
+  bad: number;
+}
 
 interface FeedbackState {
   good: number;
